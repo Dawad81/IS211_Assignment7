@@ -136,7 +136,6 @@ class Game(object):
             print '-' * 30
             print 'Program exiting......'
             print 'Goodbye!'
-            #raise SystemExit
         elif self.player_2.score >= 100:
             print 'Player 2 is the WINNER!'
             print 'With a total score of:', self.player_2.score
@@ -144,7 +143,6 @@ class Game(object):
             print '-' * 30
             print 'Program exiting......'
             print 'Goodbye!'
-            #raise SystemExit
         else:
             if self.current_player == self.player_1:
                 self.current_player = self.player_2
@@ -164,6 +162,9 @@ class Game(object):
 
 
 def matchmaking(players=list, teams=int, min_team=2, max_team=2):
+    """This function matches the number of players entered in --numPlayers,
+    in to random groups of 2, to play individual games of Pig against one
+    another."""
     factor = len(players) / (teams * min_team * 1.0)
     if factor < 1:
         return False
@@ -177,6 +178,10 @@ def matchmaking(players=list, teams=int, min_team=2, max_team=2):
     return game
 
 def main():
+    """This function initiates the game of Pig, with multiple players, in
+    multiple games, via the comand line with the --numPlayers argument.
+    Additionaly, if no --numPlayer is enterd it will automaticly prompt to ask
+    if you want to begin a game of Pig with just 2 players."""
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--numPlayers",
@@ -189,7 +194,6 @@ def main():
             player_l = []
             for x in range(args.numPlayers):
                 player_l.append('Player ')
-            #print player_l
             counter=0
             players_list=[]
             for num, player in enumerate(player_l):
@@ -205,15 +209,21 @@ def main():
             else:
                 team= int(len(players_list) /2)
                 games = matchmaking(players_list,team)
-                #print games
+                for num, item in enumerate(games):
+                    print '-' * 47
+                    print 'Game {}: Will be between {} and {}.'.format(
+                        num, item[0], item[1])
+                    print '-' * 47
                 for item in games:
-                    print '=*'*40
-                    print 'This is the game between {} and {}'.format(item[0], item[1])
+                    print
+                    print '=*'*24
+                    print 'This is the game between {} and {}'.format(
+                        item[0], item[1])
                     print
                     print '{} will be Player 1'.format(item[0])
                     print '{} will be Player 2'.format(item[1])
                     print
-                    print '=*' * 40
+                    print '=*' * 24
                     item[0] = Player()
                     item[1] = Player()
                     dice = Dice()
@@ -225,7 +235,6 @@ def main():
             Exiting the program......Good Bye.'
         raise SystemExit
 
-#python -i IS211_Assignment7.py --numPlayers 10
+    
 if __name__ == '__main__':
-    #new_game()
     main()
