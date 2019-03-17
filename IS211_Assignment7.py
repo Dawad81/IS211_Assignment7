@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """This modal initiates a game of Pig."""
 
-
+import argparse
 import random
 random.seed(0)
 
@@ -163,5 +163,51 @@ class Game(object):
         self.dice = None
 
 
+def matchmaking(players=list, teams=int, min_team=2, max_team=2):
+    factor = len(players) / (teams * min_team * 1.0)
+    if factor < 1:
+        return False
+    else:
+        if max_team is not None and len(players) > (teams * max_team):
+            players = players[:(teams * max_team)]
+        game = []
+        for i in range(teams):
+            teamlist = players[i::teams]
+            game.append(teamlist)
+    return game
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--numPlayers",
+                        help="Enter the number of players.(optional)",
+                        required=False, type=int)
+    args = parser.parse_args()
+    try:
+        if args.numPlayers:
+            print 'number of players = ', args.numPlayers
+            player_l = []
+            for x in range(args.numPlayers):
+                player_l.append('player')
+            #print player_l
+            counter=0
+            players_list=[]
+            for num, player in enumerate(player_l):
+                players = player + str(num)
+                players_list.append(players)
+                counter+=1
+            print players_list
+            team= int(len(players_list) /2)
+            games = matchmaking(players_list,team)
+            print games
+        else:
+            new_game()
+    except:
+        print 'An error has occured session terminated.\n\
+            Exiting the program......Good Bye.'
+        raise #SystemExit
+
+#python -i IS211_Assignment7.py --numPlayers 10
 if __name__ == '__main__':
-    new_game()
+    #new_game()
+    main()
