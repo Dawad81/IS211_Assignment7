@@ -136,7 +136,7 @@ class Game(object):
             print '-' * 30
             print 'Program exiting......'
             print 'Goodbye!'
-            raise SystemExit
+            #raise SystemExit
         elif self.player_2.score >= 100:
             print 'Player 2 is the WINNER!'
             print 'With a total score of:', self.player_2.score
@@ -144,7 +144,7 @@ class Game(object):
             print '-' * 30
             print 'Program exiting......'
             print 'Goodbye!'
-            raise SystemExit
+            #raise SystemExit
         else:
             if self.current_player == self.player_1:
                 self.current_player = self.player_2
@@ -188,7 +188,7 @@ def main():
             print 'number of players = ', args.numPlayers
             player_l = []
             for x in range(args.numPlayers):
-                player_l.append('player')
+                player_l.append('Player ')
             #print player_l
             counter=0
             players_list=[]
@@ -196,16 +196,34 @@ def main():
                 players = player + str(num)
                 players_list.append(players)
                 counter+=1
-            print players_list
-            team= int(len(players_list) /2)
-            games = matchmaking(players_list,team)
-            print games
+            if len(players_list) % 2 != 0:
+                print "--numPlayers must be an even number!"
+                print '-' * 80
+                print 'Program exiting......'
+                print 'Goodbye!'
+                raise SystemExit
+            else:
+                team= int(len(players_list) /2)
+                games = matchmaking(players_list,team)
+                #print games
+                for item in games:
+                    print '=*'*40
+                    print 'This is the game between {} and {}'.format(item[0], item[1])
+                    print
+                    print '{} will be Player 1'.format(item[0])
+                    print '{} will be Player 2'.format(item[1])
+                    print
+                    print '=*' * 40
+                    item[0] = Player()
+                    item[1] = Player()
+                    dice = Dice()
+                    Game(item[0], item[1], dice)
         else:
             new_game()
     except:
         print 'An error has occured session terminated.\n\
             Exiting the program......Good Bye.'
-        raise #SystemExit
+        raise SystemExit
 
 #python -i IS211_Assignment7.py --numPlayers 10
 if __name__ == '__main__':
