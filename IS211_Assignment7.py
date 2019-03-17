@@ -194,12 +194,12 @@ def main():
             player_l = []
             for x in range(args.numPlayers):
                 player_l.append('Player ')
-            counter=0
-            players_list=[]
+            counter = 0
+            players_list = []
             for num, player in enumerate(player_l):
                 players = player + str(num)
                 players_list.append(players)
-                counter+=1
+                counter += 1
             if len(players_list) % 2 != 0:
                 print "--numPlayers must be an even number!"
                 print '-' * 80
@@ -207,8 +207,8 @@ def main():
                 print 'Goodbye!'
                 raise SystemExit
             else:
-                team= int(len(players_list) /2)
-                games = matchmaking(players_list,team)
+                team = int(len(players_list) /2)
+                games = matchmaking(players_list, team)
                 for num, item in enumerate(games):
                     print '-' * 47
                     print 'Game {}: Will be between {} and {}.'.format(
@@ -231,10 +231,14 @@ def main():
         else:
             new_game()
     except:
+        print
+        print '*' * 80
         print 'An error has occured session terminated.\n\
             Exiting the program......Good Bye.'
-        raise SystemExit
+        print '*' * 80
+        print
+        SystemExit
 
-    
+
 if __name__ == '__main__':
     main()
